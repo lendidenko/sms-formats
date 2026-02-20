@@ -73,6 +73,7 @@ def run_generation_flow(
     sms_text: str,
 ) -> Tuple[str, Optional[str], Optional[str]]:
     branch_name = f"company-{company_id}"
+    scripts_source_branch = "main"
     with tempfile.TemporaryDirectory(prefix="sms-webhook-") as temp_dir:
         tmp_root = Path(temp_dir)
         repo_path = tmp_root / "repo"
@@ -91,22 +92,35 @@ def run_generation_flow(
         else:
             _run(["git", "checkout", base_branch], cwd=repo_path)
             _run(["git", "checkout", "-b", branch_name], cwd=repo_path)
-        python_bin = os.environ.get("PYTHON_BIN", "python3")
-        generator_run = subprocess.run(
-            [
-                python_bin,
-                "scripts/generate_sms_format.py",
-                "--company",
-                company_id,
-                "--allow-draft",
-            ],
-            cwd=str(repo_path),
-            check=False,
-            text=True,
-            capture_output=True,
-            input=sms_text,
+
+        # Always run generator from scripts synced with origin/main.
+        _run(["git", "fetch", "origin", scripts_source_branch], cwd=repo_path)
+        _run(
+            ["git", "checkout", f"origin/{scripts_source_branch}", "--", "scripts"],
+            cwd=repo_path,
         )
-        outcome = _parse_generator_output(generator_run)
+
+        python_bin = os.environ.get("PYTHON_BIN", "python3")
+        try:
+            generator_run = subprocess.run(
+                [
+                    python_bin,
+                    "scripts/generate_sms_format.py",
+                    "--company",
+                    company_id,
+                    "--allow-draft",
+                ],
+                cwd=str(repo_path),
+                check=False,
+                text=True,
+                capture_output=True,
+                input=sms_text,
+            )
+            outcome = _parse_generator_output(generator_run)
+        finally:
+            # Never keep scripts changes from origin/main in the bank branch worktree.
+            _run(["git", "checkout", "--", "scripts"], cwd=repo_path, check=False)
+            _run(["git", "clean", "-fd", "--", "scripts"], cwd=repo_path, check=False)
 
         if outcome.status in SUCCESS_STATUSES:
             fresh_push_url = github_client.build_clone_url(github_repo)
