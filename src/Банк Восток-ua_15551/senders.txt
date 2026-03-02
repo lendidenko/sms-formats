@@ -1,2 +1,2 @@
-bankvostok
-com.bank.vr
+BankVostok
+VSTBANK
