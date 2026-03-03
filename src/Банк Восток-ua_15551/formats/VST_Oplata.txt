@@ -1,0 +1,16 @@
+^(\d{4}-\d{4}) - Oplata\s+([\d.]+)\s+(\w+)\(([^)]+)\)\s+Dostupno\s+([\d.]+)\s+(\w+)\s+(\d{2}\.\d{2})\s+\d{2}:\d{2}
+
+-----COLUMNS-----
+syncid;outcome;instrument;payee;av_balance;acc_instrument;date#dM
+
+-----EXAMPLE-----
+5168-8811 - Oplata
+4241.82 UAH(Epitsentr K 11)
+Dostupno 157081.35 UAH
+28.02 14:24
+
+-----EXAMPLE-----
+5168-8811 - Oplata
+617.00 UAH(MCDONALDS 063)
+Dostupno 156464.35 UAH
+28.02 14:48
