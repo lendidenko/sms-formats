@@ -1,5 +1,0 @@
-{"sum":-4241.82,"currency":"UAH","account":"5168-7411","payee":"Epitsentr K 11","balance":157081.35}
-5168-7411 - Oplata
-4241.82 UAH(Epitsentr K 11)
-Dostupno 157081.35 UAH
-28.02 14:24
