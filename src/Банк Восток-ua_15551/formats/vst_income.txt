@@ -1,5 +1,16 @@
-{"sum":5510.26,"currency":"UAH","account":"5168-7411","balance":101783.05}
-5168-7411 - Zarakhuvannia zarobitnoi platy
+^(\d{4}-\d{4}) - (?:Zarakhuvannia|Vyplata premii).*?\s+([\d.]+)\s+(\w+)\s+Dostupno\s+([\d.]+)\s+(\w+)\s+(\d{2}\.\d{2})\s+\d{2}:\d{2}
+
+-----COLUMNS-----
+syncid;income;instrument;av_balance;acc_instrument;date#dM
+
+-----EXAMPLE-----
+5168-8811 - Zarakhuvannia zarobitnoi platy
 5510.26 UAH
 Dostupno 101783.05 UAH
 06.02 12:34
+
+-----EXAMPLE-----
+5168-8811 - Vyplata premii
+173749.10 UAH
+Dostupno 227396.68 UAH
+23.02 16:28
