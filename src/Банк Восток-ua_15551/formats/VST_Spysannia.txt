@@ -1,0 +1,15 @@
+^(\d{4}-\d{4}) - (?:Spysannia|Vyplata vidsotkiv)\s+([\d.]+)\s+(\w+)(?:\s+Dostupno\s+([\d.]+)\s+(\w+))?\s+(\d{2}\.\d{2})\s+\d{2}:\d{2}
+
+-----COLUMNS-----
+syncid;outcome;instrument;av_balance;acc_instrument;date#dM
+
+-----EXAMPLE-----
+5168-8811 - Spysannia
+29000.00 UAH
+Dostupno 190934.48 UAH
+24.02 00:18
+
+-----EXAMPLE-----
+5168-8811 - Vyplata vidsotkiv
+899.51 UAH
+01.03 01:38
