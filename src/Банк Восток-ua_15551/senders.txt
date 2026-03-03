@@ -1,3 +1,4 @@
 BankVostok
 VSTBANK
 com.vostok.bv
+com.bank.vr
